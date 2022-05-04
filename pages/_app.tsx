@@ -14,4 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDipatch = typeof store.dispatch;
+
 export default MyApp;
