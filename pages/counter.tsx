@@ -1,4 +1,4 @@
-import { Button, Grid, Stack } from "@mui/material";
+import { Button, Grid, IconButton, Paper, Stack } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styled from "@emotion/styled";
@@ -18,6 +18,7 @@ const CustomTitle = styled.h1`
 const Count = styled.h1`
   color: #424242;
   font-weight: bold;
+  padding: 20px 60px;
   font-size: 80px;
   font-family: "Open Sans";
 `;
@@ -38,31 +39,40 @@ const Counter: NextPage = () => {
         <Grid item xs={12}>
           <Stack spacing={5} alignItems="center">
             <CustomTitle>Counter</CustomTitle>
-            <CustomTitle className="counter">{count}</CustomTitle>
           </Stack>
         </Grid>
         <Grid item marginTop={10}>
-          <Stack
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            spacing={5}
+          <Paper
+            variant="outlined"
+            sx={{ padding: "5x 0px", backgroundColor: "#b3e5fc" }}
           >
-            <Button
-              variant="outlined"
-              startIcon={<Remove />}
-              onClick={() => dispatch(decrement())}
+            <Stack
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+              spacing={0}
             >
-              Decrement
-            </Button>
-            <Button
-              variant="outlined"
-              startIcon={<Add />}
-              onClick={() => dispatch(increment())}
-            >
-              Increment
-            </Button>
-          </Stack>
+              <IconButton
+                aria-label="Decrement"
+                className="decrement"
+                sx={{ marginX: "20px" }}
+                onClick={() => dispatch(decrement())}
+              >
+                <Remove sx={{ fontSize: "50px", color: "#0277bd" }} />
+              </IconButton>
+              <Paper variant="outlined" square>
+                <Count className="counter">{count}</Count>
+              </Paper>
+              <IconButton
+                aria-label="Increment"
+                className="increment"
+                sx={{ marginX: "20px" }}
+                onClick={() => dispatch(increment())}
+              >
+                <Add sx={{ fontSize: "50px", color: "#0277bd" }} />
+              </IconButton>
+            </Stack>
+          </Paper>
         </Grid>
       </Grid>
     </div>

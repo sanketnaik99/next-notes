@@ -8,23 +8,23 @@ it("Testing Counter Page", () => {
   cy.get(".counter").should("have.text", "0");
 
   // Click the increment button
-  cy.get("button").contains("Increment").click();
+  cy.get(".increment").click();
 
   // Check Counter Value
   cy.get(".counter").should("have.text", "1");
 
   // Click the increment button x 2
-  cy.get("button").contains("Increment").click();
-  cy.get("button").contains("Increment").click();
+  cy.get(".increment").click();
+  cy.get(".increment").click();
 
   // Check Counter Value
   cy.get(".counter").should("have.text", "3");
 
   // Click the decrement button x 4
-  cy.get("button").contains("Decrement").click();
-  cy.get("button").contains("Decrement").click();
-  cy.get("button").contains("Decrement").click();
-  cy.get("button").contains("Decrement").click();
+  cy.get(".decrement").click();
+  cy.get(".decrement").click();
+  cy.get(".decrement").click();
+  cy.get(".decrement").click();
 
   // Check Counter Value
   cy.get(".counter").should("have.text", "-1");
