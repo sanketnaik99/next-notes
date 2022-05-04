@@ -1,6 +1,6 @@
 describe("Counter Page Tests", () => {
   it("Should increment count when the + button is clicked", () => {
-    cy.visit("http://localhost:3000/counter");
+    cy.visit("/counter");
     //   Check if Title is ok
     cy.get("h1").contains("Counter");
 
