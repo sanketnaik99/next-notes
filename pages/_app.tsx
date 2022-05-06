@@ -3,13 +3,16 @@ import type { AppProps } from "next/app";
 import { configureStore } from "@reduxjs/toolkit";
 import reducer from "../redux/modules/index";
 import { Provider } from "react-redux";
+import Layout from "../components/Layout/Layout";
 
 const store = configureStore({ reducer });
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </Provider>
   );
 }
