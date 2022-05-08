@@ -13,6 +13,7 @@ const CustomTitle = styled.h1`
   font-family: "Open Sans", Arial, sans-serif;
   font-size: 40px;
   font-weight: bold;
+  margin-top: 50px;
 `;
 
 const Count = styled.h1`
