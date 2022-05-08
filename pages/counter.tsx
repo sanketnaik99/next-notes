@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDipatch, RootState } from "./_app";
+import { AppDispatch, RootState } from "./_app";
 import { Add, Remove } from "@mui/icons-material";
 import { decrement, increment } from "../redux/modules/counter";
 
@@ -26,7 +26,7 @@ const Count = styled.h1`
 
 const Counter: NextPage = () => {
   const count = useSelector((state: RootState) => state.counter.count);
-  const dispatch = useDispatch<AppDipatch>();
+  const dispatch = useDispatch<AppDispatch>();
 
   return (
     <div>

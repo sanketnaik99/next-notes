@@ -2,7 +2,10 @@ import { Add } from "@mui/icons-material";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { object, string } from "yup";
+import { AppDispatch } from "../../pages/_app";
+import { addNote, Note } from "../../redux/modules/notes";
 
 const noteValidationSchema = object({
   title: string()
@@ -19,12 +22,22 @@ interface NoteFormValues {
 }
 
 const AddNote = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const initialValues: NoteFormValues = { title: "", content: "" };
   const formik = useFormik<NoteFormValues>({
     initialValues: initialValues,
     validationSchema: noteValidationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      const note: Note = {
+        title: values.title,
+        content: values.content,
+        id: `${new Date().getTime().toString()}${Math.floor(
+          Math.random() * 100
+        )}`,
+      };
+      dispatch(addNote(note));
+      formik.resetForm();
     },
   });
 

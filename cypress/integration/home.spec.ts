@@ -57,4 +57,29 @@ describe("Home Page Tests", () => {
     cy.get("p#title-helper-text").should("not.exist");
     cy.get("p#content-helper-text").should("not.exist");
   });
+
+  it("Should display newly added notes.", () => {
+    const noteTitles: string[] = ["Title 1", "Title 2", "Title 3", "Title 4"];
+    const noteContents: string[] = [
+      "She was sad to hear that fireflies are facing extinction due to artificial light, habitat loss, and pesticides.",
+      "She had convinced her kids that any mushroom found on the ground would kill them if they touched it.",
+      "Waffles are always better without fire ants and fleas.",
+      "The golden retriever loved the fireworks each Fourth of July.",
+    ];
+
+    for (let i = 0; i < 4; i++) {
+      // Enter the current title and content
+      cy.get("input#title").type(noteTitles[i]);
+      cy.get("textarea#content").type(noteContents[i]);
+
+      // Click the 'Add Note' Button
+      cy.get("#add-note-submit").click();
+    }
+
+    // Randomly check if one of the inputs exists.
+    const index = Math.floor(Math.random() * 4);
+
+    cy.get("h5").contains(noteTitles[index]).should("exist");
+    cy.get("p").contains(noteContents[index]).should("exist");
+  });
 });
