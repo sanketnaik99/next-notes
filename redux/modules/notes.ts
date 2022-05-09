@@ -1,4 +1,5 @@
 const ADD_NOTE = "next-notes/notes/ADD_NOTE";
+const DELETE_NOTE = "next-notes/notes/DELETE_NOTE";
 
 export interface Note {
   title: string;
@@ -30,6 +31,12 @@ const reducer = (
         ...state,
         notes: action.note ? [...state.notes, action.note] : state.notes,
       };
+    case DELETE_NOTE: {
+      return {
+        ...state,
+        notes: state.notes.filter((note) => note.id !== action.id),
+      };
+    }
     default:
       return state;
   }
@@ -37,6 +44,10 @@ const reducer = (
 
 export const addNote = (note: Note) => {
   return { type: ADD_NOTE, note };
+};
+
+export const deleteNote = (noteID: string) => {
+  return { type: DELETE_NOTE, id: noteID };
 };
 
 export default reducer;

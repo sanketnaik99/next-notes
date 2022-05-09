@@ -1,4 +1,12 @@
 describe("Home Page Tests", () => {
+  const noteTitles: string[] = ["Title 1", "Title 2", "Title 3", "Title 4"];
+  const noteContents: string[] = [
+    "She was sad to hear that fireflies are facing extinction due to artificial light, habitat loss, and pesticides.",
+    "She had convinced her kids that any mushroom found on the ground would kill them if they touched it.",
+    "Waffles are always better without fire ants and fleas.",
+    "The golden retriever loved the fireworks each Fourth of July.",
+  ];
+
   beforeEach(() => {
     cy.visit("/");
   });
@@ -59,14 +67,6 @@ describe("Home Page Tests", () => {
   });
 
   it("Should display newly added notes.", () => {
-    const noteTitles: string[] = ["Title 1", "Title 2", "Title 3", "Title 4"];
-    const noteContents: string[] = [
-      "She was sad to hear that fireflies are facing extinction due to artificial light, habitat loss, and pesticides.",
-      "She had convinced her kids that any mushroom found on the ground would kill them if they touched it.",
-      "Waffles are always better without fire ants and fleas.",
-      "The golden retriever loved the fireworks each Fourth of July.",
-    ];
-
     for (let i = 0; i < 4; i++) {
       // Enter the current title and content
       cy.get("input#title").type(noteTitles[i]);
@@ -81,5 +81,34 @@ describe("Home Page Tests", () => {
 
     cy.get("h5").contains(noteTitles[index]).should("exist");
     cy.get("p").contains(noteContents[index]).should("exist");
+  });
+
+  it("Should remove a note when the delete process is followed.", () => {
+    // Add Demo notes to the list
+    for (let i = 0; i < 4; i++) {
+      // Enter the current title and content
+      cy.get("input#title").type(noteTitles[i]);
+      cy.get("textarea#content").type(noteContents[i]);
+
+      // Click the 'Add Note' Button
+      cy.get("#add-note-submit").click();
+    }
+
+    // Randomly select a note to be deleted.
+    const index = Math.floor(Math.random() * 4);
+    cy.get("p")
+      .contains(noteContents[index])
+      .parent()
+      .parent()
+      .find("button")
+      .should("have.text", "Delete")
+      .click();
+
+    cy.wait(500);
+    // Click the confirm button
+    cy.get("button#yes-button").should("have.text", "Yes").click();
+
+    cy.contains(noteTitles[index]).should("not.exist");
+    cy.contains(noteContents[index]).should("not.exist");
   });
 });

@@ -4,6 +4,7 @@ import {
   CardActions,
   CardContent,
   Grid,
+  Modal,
   Paper,
   Stack,
   Typography,
@@ -11,11 +12,23 @@ import {
 import type { NextPage } from "next";
 import Head from "next/head";
 import AddNote from "../components/Home/AddNote";
-import { useSelector } from "react-redux";
-import { RootState } from "./_app";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "./_app";
+import { Check, Clear, Delete } from "@mui/icons-material";
+import { useState } from "react";
+import { Box } from "@mui/system";
+import { deleteNote } from "../redux/modules/notes";
 
 const Home: NextPage = () => {
   const notes = useSelector((state: RootState) => state.notes.notes);
+  const dispatch = useDispatch<AppDispatch>();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [IDToDelete, setIDToDelete] = useState<string>("");
+
+  const handleClose = () => {
+    setModalOpen(false);
+    setIDToDelete("");
+  };
 
   return (
     <div>
@@ -61,13 +74,86 @@ const Home: NextPage = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small">Learn More</Button>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    startIcon={<Delete />}
+                    id={`delete-${note.id}`}
+                    onClick={() => {
+                      setModalOpen(true);
+                      setIDToDelete(note.id);
+                    }}
+                  >
+                    Delete
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
           ))}
         </Grid>
       </Stack>
+      <Modal open={modalOpen} onClose={handleClose}>
+        <Box
+          sx={{
+            position: "absolute" as "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+          id="delete-confirmation-modal"
+        >
+          <Paper sx={{ padding: "20px" }}>
+            <Typography id="modal-modal-title" variant="h6" component="h6">
+              Are you sure you want to delete the following note?
+            </Typography>
+            <Typography
+              variant="body1"
+              component="p"
+              sx={{ marginTop: "12px" }}
+            >
+              Title: {notes.filter((note) => note.id == IDToDelete)[0]?.title}
+            </Typography>
+            <Typography
+              variant="body1"
+              component="p"
+              sx={{
+                paddingBottom: "10px",
+                borderBottom: "1px solid rgba(33, 33, 33, 0.2)",
+              }}
+            >
+              Content:{" "}
+              {notes.filter((note) => note.id == IDToDelete)[0]?.content}
+            </Typography>
+            <Stack
+              direction="row-reverse"
+              spacing={4}
+              sx={{ marginTop: "20px" }}
+            >
+              <Button
+                color="success"
+                variant="outlined"
+                id="yes-button"
+                startIcon={<Check />}
+                onClick={() => {
+                  dispatch(deleteNote(IDToDelete));
+                  setModalOpen(false);
+                  setIDToDelete("");
+                }}
+              >
+                Yes
+              </Button>
+              <Button
+                color="error"
+                variant="outlined"
+                startIcon={<Clear />}
+                onClick={handleClose}
+              >
+                No
+              </Button>
+            </Stack>
+          </Paper>
+        </Box>
+      </Modal>
     </div>
   );
 };
