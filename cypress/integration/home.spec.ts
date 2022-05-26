@@ -13,53 +13,57 @@ describe("Home Page Tests", () => {
 
   it("Form Validation Should fail when no title and content are present", () => {
     // Click submit button without entering anything
-    cy.get("#add-note-submit").click();
+    cy.get("[data-cy=add-note-submit]").click();
 
     // Both fields should show the error message
-    cy.get("p#title-helper-text").should("have.text", "A title is required");
-    cy.get("p#content-helper-text").should(
-      "have.text",
-      "Note content is required"
-    );
+    cy.contains("A title is required").should("exist");
+    cy.contains("Note content is required").should("exist");
+    // cy.get("p#title-helper-text").should("have.text", "A title is required");
+    // cy.get("p#content-helper-text").should(
+    //   "have.text",
+    //   "Note content is required"
+    // );
   });
 
   it("Form Validation Should fail when the title is too short.", () => {
     // Enter invalid title
-    cy.get("input#title").type("Ab");
+    cy.get("[data-cy=title-input]").type("Ab");
 
     // Click the button
-    cy.get("#add-note-submit").click();
+    cy.get("[data-cy=add-note-submit]").click();
 
     // Invalid title message should be displayed.
-    cy.get("p#title-helper-text").should(
-      "have.text",
-      "Please enter a valid title"
-    );
+    cy.contains("Please enter a valid title").should("exist");
+    // cy.get("p#title-helper-text").should(
+    //   "have.text",
+    //   "Please enter a valid title"
+    // );
   });
 
   it("Form Validation Should fail when the content is too short.", () => {
     // Enter invalid content
-    cy.get("textarea#content").type("Hello");
+    cy.get("[data-cy=content-input]").type("Hello");
 
     // Click the button
-    cy.get("#add-note-submit").click();
+    cy.get("[data-cy=add-note-submit]").click();
 
     // Invalid content message should be displayed
-    cy.get("p#content-helper-text").should(
-      "have.text",
-      "Please enter valid note content"
-    );
+    cy.contains("Please enter valid note content").should("exist");
+    // cy.get("p#content-helper-text").should(
+    //   "have.text",
+    //   "Please enter valid note content"
+    // );
   });
 
   it("Form Validation will succeed when inputs are valid.", () => {
     // Enter valid title and content
-    cy.get("input#title").type("Title");
-    cy.get("textarea#content").type(
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. {enter}Mauris lacinia, quam rhoncus ornare viverra"
+    cy.get("[data-cy=title-input]").type("Abcd1234");
+    cy.get("[data-cy=content-input]").type(
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lacinia, quam rhoncus ornare viverra"
     );
 
     // Click the button
-    cy.get("#add-note-submit").click();
+    cy.get("[data-cy=add-note-submit]").click();
 
     // No Error message should be displayed.
     cy.get("p#title-helper-text").should("not.exist");
@@ -69,11 +73,11 @@ describe("Home Page Tests", () => {
   it("Should display newly added notes.", () => {
     for (let i = 0; i < 4; i++) {
       // Enter the current title and content
-      cy.get("input#title").type(noteTitles[i]);
-      cy.get("textarea#content").type(noteContents[i]);
+      cy.get("[data-cy=title-input]").type(noteTitles[i]);
+      cy.get("[data-cy=content-input]").type(noteContents[i]);
 
       // Click the 'Add Note' Button
-      cy.get("#add-note-submit").click();
+      cy.get("[data-cy=add-note-submit]").click();
     }
 
     // Randomly check if one of the inputs exists.
@@ -87,11 +91,11 @@ describe("Home Page Tests", () => {
     // Add Demo notes to the list
     for (let i = 0; i < 4; i++) {
       // Enter the current title and content
-      cy.get("input#title").type(noteTitles[i]);
-      cy.get("textarea#content").type(noteContents[i]);
+      cy.get("[data-cy=title-input]").type(noteTitles[i]);
+      cy.get("[data-cy=content-input]").type(noteContents[i]);
 
       // Click the 'Add Note' Button
-      cy.get("#add-note-submit").click();
+      cy.get("[data-cy=add-note-submit]").click();
     }
 
     // Randomly select a note to be deleted.
@@ -100,13 +104,14 @@ describe("Home Page Tests", () => {
       .contains(noteContents[index])
       .parent()
       .parent()
-      .find("button")
-      .should("have.text", "Delete")
+      .find("[data-cy=delete-button]")
       .click();
 
     cy.wait(500);
     // Click the confirm button
-    cy.get("button#yes-button").should("have.text", "Yes").click();
+    cy.get("[data-cy=delete-confirm-button]")
+      .should("have.text", "Yes")
+      .click();
 
     cy.contains(noteTitles[index]).should("not.exist");
     cy.contains(noteContents[index]).should("not.exist");

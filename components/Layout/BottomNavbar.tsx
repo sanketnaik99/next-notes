@@ -1,4 +1,4 @@
-import { Add, Home } from "@mui/icons-material";
+import { Add, BarChart, Home } from "@mui/icons-material";
 import {
   BottomNavigation,
   BottomNavigationAction,
@@ -8,7 +8,7 @@ import {
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-const routes = ["/", "/counter", "/"];
+const routes = ["/", "/counter", "/graphs"];
 
 const BottomNavbar = () => {
   const [value, setValue] = useState(0);
@@ -38,7 +38,7 @@ const BottomNavbar = () => {
         >
           <BottomNavigationAction label="Home" icon={<Home />} />
           <BottomNavigationAction label="Counter" icon={<Add />} />
-          <BottomNavigationAction label="Recents" icon={<Add />} />
+          <BottomNavigationAction label="Graphs" icon={<BarChart />} />
         </BottomNavigation>
       </Paper>
     </Container>

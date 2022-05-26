@@ -83,6 +83,7 @@ const Home: NextPage = () => {
                       setModalOpen(true);
                       setIDToDelete(note.id);
                     }}
+                    data-cy="delete-button"
                   >
                     Delete
                   </Button>
@@ -139,6 +140,7 @@ const Home: NextPage = () => {
                   setModalOpen(false);
                   setIDToDelete("");
                 }}
+                data-cy="delete-confirm-button"
               >
                 Yes
               </Button>
@@ -147,6 +149,7 @@ const Home: NextPage = () => {
                 variant="outlined"
                 startIcon={<Clear />}
                 onClick={handleClose}
+                data-cy="delete-cancel-button"
               >
                 No
               </Button>

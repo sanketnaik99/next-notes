@@ -13,6 +13,7 @@ import React from "react";
 const pages = [
   { link: "/", title: "Home" },
   { link: "/counter", title: "Counter" },
+  { link: "/graphs", title: "Graphs" },
 ];
 
 const Navbar = () => {

@@ -80,6 +80,7 @@ const AddNote = () => {
                 onChange={formik.handleChange}
                 error={formik.touched.title && Boolean(formik.errors.title)}
                 helperText={formik.touched.title && formik.errors.title}
+                data-cy="title-input"
               />
             </Grid>
             <Grid item xs={12} flexDirection="row" flexGrow={1}>
@@ -94,6 +95,7 @@ const AddNote = () => {
                 onChange={formik.handleChange}
                 error={formik.touched.content && Boolean(formik.errors.content)}
                 helperText={formik.touched.content && formik.errors.content}
+                data-cy="content-input"
               />
             </Grid>
             <Grid item>
@@ -103,6 +105,7 @@ const AddNote = () => {
                 id="add-note-submit"
                 startIcon={<Add />}
                 type="submit"
+                data-cy="add-note-submit"
               >
                 Add Note
               </Button>

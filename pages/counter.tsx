@@ -39,7 +39,7 @@ const Counter: NextPage = () => {
       <Grid container direction="row" justifyContent="center">
         <Grid item xs={12}>
           <Stack spacing={5} alignItems="center">
-            <CustomTitle>Counter</CustomTitle>
+            <CustomTitle data-cy="counter-page-title">Counter</CustomTitle>
           </Stack>
         </Grid>
         <Grid item marginTop={10}>
@@ -58,17 +58,21 @@ const Counter: NextPage = () => {
                 className="decrement"
                 sx={{ marginX: "20px" }}
                 onClick={() => dispatch(decrement())}
+                data-cy="decrement-button"
               >
                 <Remove sx={{ fontSize: "50px", color: "#0277bd" }} />
               </IconButton>
               <Paper variant="outlined" square>
-                <Count className="counter">{count}</Count>
+                <Count className="counter" data-cy="count">
+                  {count}
+                </Count>
               </Paper>
               <IconButton
                 aria-label="Increment"
                 className="increment"
                 sx={{ marginX: "20px" }}
                 onClick={() => dispatch(increment())}
+                data-cy="increment-button"
               >
                 <Add sx={{ fontSize: "50px", color: "#0277bd" }} />
               </IconButton>
