@@ -38,6 +38,9 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
+          name: Install Cypress
+          command: npx cypress install
+      - run:
           name: Verify Cypress
           command: npx cypress verify
       - run:
