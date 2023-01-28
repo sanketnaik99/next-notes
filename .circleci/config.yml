@@ -29,12 +29,9 @@ jobs:
             - ./.next/cache
   test-app:
     docker:
-      - image: cimg/node:16.16.0
+      - image: 'cypress/browsers:node16.14.2-slim-chrome100-ff99-edge'
     steps:
       - checkout
-      - run:
-          name: Install Cypress
-          command: npx cypress install
       - run:
           name: Verify Cypress
           command: npx cypress verify
@@ -43,7 +40,7 @@ jobs:
           command: npm run start
       - run:
           name: Run Tests
-          command: npx cypress run 
+          command: npx cypress run --browser chrome
 
 
 # Invoke jobs via workflows
