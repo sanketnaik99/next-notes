@@ -26,12 +26,14 @@ jobs:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
-            - ./.next/cache
+            - ./.next
   test-app:
     docker:
       - image: 'cypress/browsers:node16.14.2-slim-chrome100-ff99-edge'
     steps:
       - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
           name: Verify Cypress
           command: npx cypress verify
