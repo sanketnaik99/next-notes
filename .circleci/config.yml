@@ -39,7 +39,7 @@ jobs:
           command: npx cypress verify
       - run:
           name: Start app
-          command: npm run start
+          command: npx next start
       - run:
           name: Run Tests
           command: npx cypress run --browser chrome
