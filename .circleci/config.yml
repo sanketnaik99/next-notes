@@ -31,6 +31,21 @@ jobs:
           root: ./
           paths:
             - ./
+  test:
+    docker:
+      - image: cimg/node:16.16.0
+    steps:
+      - attach_workspace
+      - run:
+          name: Verify Cypress
+          command: npx cypress verify
+      - run:
+          name: Start app
+          command: npm run start
+      - run:
+          name: Run Tests
+          command: npx cypress run
+      
 
       
 
