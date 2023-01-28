@@ -44,10 +44,7 @@ jobs:
           command: npm run start
       - run:
           name: Run Tests
-          command: npx cypress run
-      
-
-      
+          command: npx cypress run 
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -55,3 +52,4 @@ workflows:
   build:
     jobs:
       - build
+      - test
