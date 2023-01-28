@@ -27,17 +27,14 @@ jobs:
           paths:
             - ./node_modules
             - ./.next/cache
-            - ~/.cache/Cypress
-      - persist_to_workspace:
-          root: ./
-          paths:
-            - ./
   test-app:
     docker:
       - image: cimg/node:16.16.0
     steps:
-      - attach_workspace:
-          at: ~/
+      - checkout
+      - run:
+          name: Install Cypress
+          command: npx cypress install
       - run:
           name: Verify Cypress
           command: npx cypress verify
